@@ -13,10 +13,13 @@
     background-repeat: repeat-x;
 }
 
+
 .cat {
     height: 250px;
     width: 250px;
+    /*background-image: url('../Assest/character/Jump (1).png'); !* Set the initial image *!*/
     position: absolute;
     bottom: 2%;
     left: 0;
+    transition: bottom 0.3s ease-in-out;
 }
