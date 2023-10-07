@@ -4,6 +4,35 @@
     display: flex;
 }
 
+
+/* Existing CSS styles for .background and other elements */
+
+.starting-page {
+    display: none; /* Initially hide the starting page */
+    text-align: center;
+    /*padding: 50px;*/
+    /*background-color: rgba(0, 0, 0, 0.5); !* Semi-transparent background *!*/
+    /*color: white;*/
+    width: 100%;
+    height: 100vh;
+    background-image: url("../Assest/img/FirstLvelBacImg.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.starting-page h1 {
+    font-size: 36px;
+}
+
+.starting-page button {
+    font-size: 24px;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+/*//////////////////////////////*/
 .background {
     width: 100%;
     height: 100vh;
@@ -11,15 +40,30 @@
     background-size: cover;
     background-position: center;
     background-repeat: repeat-x;
+    overflow-x: hidden;
+    position: absolute;
 }
 
 
 .cat {
-    height: 250px;
-    width: 250px;
+    height: 200px;
+    /*width: 250px;*/
     /*background-image: url('../Assest/character/Jump (1).png'); !* Set the initial image *!*/
     position: absolute;
     bottom: 2%;
     left: 0;
     transition: bottom 0.3s ease-in-out;
+}
+
+.box {
+    width: 210px;
+    height: 230px;
+    /*background-color: red;*/
+    position: absolute;
+    margin-top: 450px;
+    background-image: url("../Assest/img/19e1fd9c4ef1d56a00b01ca5110d8244.gif");
+    background-size: contain;
+    background-repeat: no-repeat;
+
+
 }

@@ -1,3 +1,30 @@
+
+function initGame() {
+    // Show the starting page
+    document.getElementById("startingPage").style.display = "block";
+
+    // Hide the game content
+    document.getElementById("backGround").style.display = "none";
+
+    // Add any other game initialization logic here
+    // Call the createBoxes function to create the boxes
+    createBoxes();
+
+    // Call the idleAnimationStart function to start idle animation
+    idleAnimationStart();
+}
+
+function startGame() {
+    // Hide the starting page
+    document.getElementById("startingPage").style.display = "none";
+
+    // Show the game content
+    document.getElementById("backGround").style.display = "block";
+
+    // Add any game initialization logic here
+}
+
+
 //Catch character here.......................
 var cat = document.getElementById("cat");
 
@@ -47,6 +74,9 @@ document.addEventListener('keydown', function (event) {
                 moveBackGroundAnimationId = setInterval(moveBackground, 100);
 
             }
+            if (boxAnimationId == 0) {
+                boxAnimationId = setInterval(boxAnimation, 100);
+            }
         }
 
     }
@@ -67,7 +97,6 @@ function moveBackground() {
 //Jump Animation.................
 jumpImageNumber = 1;
 jumpAnimationNumber = 0;
-// catMarginTop = 0;
 let isJumping = false;
 
 function jumpAnimation() {
@@ -82,7 +111,7 @@ function jumpAnimation() {
     // }
     if (!isJumping) {
         isJumping = true;
-        cat.style.bottom = '20%';
+        cat.style.bottom = '35%';
         setTimeout(() => {
             cat.style.bottom = '1%';
             isJumping = false;
@@ -119,7 +148,69 @@ document.addEventListener('keydown', function (event) {
             moveBackGroundAnimationId = setInterval(moveBackground, 100);
 
         }
+        if (boxAnimationId == 0) {
+            boxAnimationId = setInterval(boxAnimation, 100);
+        }
+
 
     }
 
 });
+boxMarginLeft = 800;
+var boxAnimationId = 0;
+
+function createBoxes() {
+    for (var i = 0; i <= 10; i++) {
+        var box = document.createElement("div");
+        box.className = "box";
+        document.getElementById("backGround").appendChild(box);
+        box.style.marginLeft = boxMarginLeft + "px";
+        //boxMarginLeft=boxMarginLeft+1000;
+        box.id = "box" + i;
+        if (i < 5) {
+            boxMarginLeft = boxMarginLeft + 1000;
+
+        }
+        if (i >= 5) {
+            boxMarginLeft = boxMarginLeft + 600;
+        }
+    }
+
+
+}
+// function createBoxes() {
+//     var boxMarginLeft = 800; // Initialize the margin-left value for the first box
+//     for (var i = 0; i < 10; i++) {
+//         var box = document.createElement("div");
+//         box.className = "box";
+//         box.style.marginLeft = boxMarginLeft + "px";
+//         document.getElementById("backGround").appendChild(box);
+//         boxMarginLeft += 150; // Increase the margin-left for the next box
+//     }
+// }
+
+// catMarginTop=
+function boxAnimation() {
+
+    for (let i = 0; i < 10; i++) {
+        var box = document.getElementById("box" + i);
+        var currentMarginLeft = getComputedStyle(box).marginLeft;
+        var newMarginLeft = parseInt(currentMarginLeft) - 35;
+        box.style.marginLeft = newMarginLeft + "px";
+
+        if (newMarginLeft >= -110 & newMarginLeft <= 100) {
+            if (isJumping == true) {
+                clearInterval(boxAnimationId);
+
+                clearInterval(runAnimationNumber);
+                runAnimationNumber = -1;
+
+                clearInterval(jumpAnimationNumber);
+                jumpAnimationNumber = -1;
+
+                clearInterval(moveBackGroundAnimationId);
+                moveBackGroundAnimationId = -1;
+            }
+        }
+    }
+}
