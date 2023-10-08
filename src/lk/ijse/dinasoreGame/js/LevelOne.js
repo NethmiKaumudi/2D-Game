@@ -1,4 +1,3 @@
-
 function initGame() {
     // Show the starting page
     document.getElementById("startingPage").style.display = "block";
@@ -22,11 +21,14 @@ function startGame() {
     document.getElementById("backGround").style.display = "block";
 
     // Add any game initialization logic here
+
 }
 
 
 //Catch character here.......................
 var cat = document.getElementById("cat");
+var cat2 = document.getElementById("cat1");
+
 
 idleImageNumber = 1;
 idleAnimationNumber = 0;
@@ -39,6 +41,8 @@ function idleAnimation() {
         idleImageNumber = 1;
     }
     cat.src = "../Assest/character/Idle (" + idleImageNumber + ").png";
+    cat2.src = "../Assest/character/Idle (" + idleImageNumber + ").png";
+
 }
 
 function idleAnimationStart() {
@@ -87,10 +91,13 @@ document.addEventListener('keydown', function (event) {
 
 var backGroundImagePositionX = 0;
 var moveBackGroundAnimationId = 0
+var score = 0;
 
 function moveBackground() {
     backGroundImagePositionX = backGroundImagePositionX - 20;
     document.getElementById("backGround").style.backgroundPositionX = backGroundImagePositionX + "px";
+    score = score + 1;
+    document.getElementById("score1").innerHTML = score;
 
 }
 
@@ -98,24 +105,17 @@ function moveBackground() {
 jumpImageNumber = 1;
 jumpAnimationNumber = 0;
 let isJumping = false;
+catMarginTop = 520;
 
 function jumpAnimation() {
     jumpImageNumber = jumpImageNumber + 1;
-    // if (jumpImageNumber <= 4) {
-    //     catMarginTop = catMarginTop - 20;
-    //     cat.style.marginTop = catMarginTop + "px";
-    // }
-    // if (jumpImageNumber >= 5) {
-    //     catMarginTop = catMarginTop + 20;
-    //     cat.style.marginTop = catMarginTop + "px";
-    // }
-    if (!isJumping) {
-        isJumping = true;
-        cat.style.bottom = '35%';
-        setTimeout(() => {
-            cat.style.bottom = '1%';
-            isJumping = false;
-        }, 200); // Adjust the duration of the jump
+    if (jumpImageNumber <= 5) {
+        catMarginTop = catMarginTop - 50;
+        cat.style.marginTop = catMarginTop + "px";
+    }
+    if (jumpImageNumber >= 6) {
+        catMarginTop = catMarginTop + 50;
+        cat.style.marginTop = catMarginTop + "px";
     }
 
     if (jumpImageNumber == 9) {
@@ -129,11 +129,12 @@ function jumpAnimation() {
 
 }
 
+
 function jumpAnimationStart() {
     clearInterval(idleAnimationNumber);
     runImageNumber = 0;
     clearInterval(runAnimationNumber);
-    jumpAnimationNumber = setInterval(jumpAnimation, 100);
+    jumpAnimationNumber = setInterval(jumpAnimation, 150);
 
 }
 
@@ -142,7 +143,6 @@ document.addEventListener('keydown', function (event) {
     if (event.key === ' ') {
         if (jumpAnimationNumber == 0) {
             jumpAnimationStart();
-
         }
         if (moveBackGroundAnimationId == 0) {
             moveBackGroundAnimationId = setInterval(moveBackground, 100);
@@ -156,7 +156,7 @@ document.addEventListener('keydown', function (event) {
     }
 
 });
-boxMarginLeft = 800;
+boxMarginLeft = 1800;
 var boxAnimationId = 0;
 
 function createBoxes() {
@@ -168,49 +168,60 @@ function createBoxes() {
         //boxMarginLeft=boxMarginLeft+1000;
         box.id = "box" + i;
         if (i < 5) {
-            boxMarginLeft = boxMarginLeft + 1000;
+            boxMarginLeft = boxMarginLeft + 2000;
 
         }
         if (i >= 5) {
-            boxMarginLeft = boxMarginLeft + 600;
+            boxMarginLeft = boxMarginLeft + 1000;
         }
     }
 
 
 }
-// function createBoxes() {
-//     var boxMarginLeft = 800; // Initialize the margin-left value for the first box
-//     for (var i = 0; i < 10; i++) {
-//         var box = document.createElement("div");
-//         box.className = "box";
-//         box.style.marginLeft = boxMarginLeft + "px";
-//         document.getElementById("backGround").appendChild(box);
-//         boxMarginLeft += 150; // Increase the margin-left for the next box
-//     }
-// }
 
-// catMarginTop=
 function boxAnimation() {
+    let isJumping = false; // You should define isJumping within the function
 
     for (let i = 0; i < 10; i++) {
         var box = document.getElementById("box" + i);
-        var currentMarginLeft = getComputedStyle(box).marginLeft;
-        var newMarginLeft = parseInt(currentMarginLeft) - 35;
+        var currentMarginLeft = parseInt(getComputedStyle(box).marginLeft); // Parse the margin value to an integer
+        var newMarginLeft = currentMarginLeft - 35;
         box.style.marginLeft = newMarginLeft + "px";
 
-        if (newMarginLeft >= -110 & newMarginLeft <= 100) {
-            if (isJumping == true) {
+        if (newMarginLeft >= -110 && newMarginLeft <= 100) {
+            if (catMarginTop > 500) {
                 clearInterval(boxAnimationId);
-
                 clearInterval(runAnimationNumber);
                 runAnimationNumber = -1;
-
                 clearInterval(jumpAnimationNumber);
                 jumpAnimationNumber = -1;
-
                 clearInterval(moveBackGroundAnimationId);
                 moveBackGroundAnimationId = -1;
+                startDeathAnimation(); // Start the death animation
             }
         }
     }
 }
+
+let deathAnimationNumber = 0;
+let deathImageNumber = 1;
+
+function startDeathAnimation() {
+    deathAnimationNumber = setInterval(catDeathAnimation, 100);
+}
+
+function catDeathAnimation() {
+    deathImageNumber = deathImageNumber + 1;
+    if (deathImageNumber == 11) {
+        deathImageNumber = 10;        // You can add logic here to handle game over or restart
+        document.getElementById("gameOverScreen").style.visibility = "visible";
+        document.getElementById("endScore").innerHTML = score;
+    }
+    cat.src = "../Assest/character/Dead (" + deathImageNumber + ").png";
+}
+
+function reload() {
+    location.reload();
+
+}
+

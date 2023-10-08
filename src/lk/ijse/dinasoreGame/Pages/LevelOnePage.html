@@ -30,22 +30,40 @@
     <title>LevelOne</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Styles/FirstLevelPage.css">
+    <link rel="stylesheet" href="../Styles/normalize.css">
 </head>
-<body class="body" onload="initGame()">
+<body class="body" onload="initGame(); idleAnimationStart();">
 <!-- Starting Page -->
 <div id="startingPage" class="starting-page">
-    <h1>Welcome to Level One</h1>
-    <button id="startButton" onclick="startGame()">Start Game</button>
+    <h1>The <span style="color: deepskyblue">Running</span> <span style="color: grey">Cat</span></h1>
     <img src="../Assest/character/Walk%20(1).png" class="cat" id="cat1"/>
+
+    <div class="description">
+        <h2>Description to Play Game</h2>
+        <h3>Press <span style="color: white">'Enter '</span> Key to Start the Game</h3>
+        <h3>Press <span style="color: white">'Space '</span> Key to Jump the Character</h3>
+        <button id="startButton" onclick="startGame()">Start Game</button>
+        <button id="exitButton">Exit</button>
+    </div>
 
 </div>
 
 <!-- Game Content -->
-<div class="background" id="backGround" >
-    <h1>SCORE :</h1>
+<div class="background" id="backGround">
     <img src="../Assest/character/Walk%20(1).png" class="cat" id="cat"/>
+    <div class="score " id="score1"></div>
+</div>
+<div id="gameOverScreen" class="game-over-screen">
+    <div style="color: black">Game Over</div>
+    <div style="color: black"> Your Score</div>
+    <div style="color: blue" id="endScore"> 0</div>
+    <button class="overBtn" onclick="reload();">Try Again</button>
 </div>
 
+<div id="winScreen" class="win-screen">
+    <div style="color: green">You Win!</div>
+    <button class="nextLevelBtn" onclick="nextLevel();">Next Level</button>
+</div>
 
 <script src="../js/LevelOne.js"></script>
 </body>
