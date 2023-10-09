@@ -1,28 +1,3 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>LevelOne</title>-->
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-<!--    <link rel="stylesheet" href="../Styles/FirstLevelPage.css">-->
-
-<!--</head>-->
-<!--<body class="body" onload="idleAnimationStart(),createBoxes()">-->
-<!--&lt;!&ndash;<div id="StartingPage"></div>&ndash;&gt;-->
-<!--<div id="startingPage" class="starting-page">-->
-<!--    &lt;!&ndash; Add your starting page content here &ndash;&gt;-->
-<!--    <h1>Welcome to Level One</h1>-->
-<!--    <button id="startButton" onclick="startGame()">Start Game</button>-->
-<!--</div>-->
-<!--<div class="background" id="backGround">-->
-<!--    <h1>SCORE :</h1>-->
-<!--    <img src="../Assest/character/Walk%20(1).png" class="cat" id="cat"/>-->
-<!--</div>-->
-
-<!--<script src="../js/LevelOne.js"></script>-->
-
-<!--</body>-->
-<!--</html>-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,10 +23,14 @@
 
 </div>
 
+
 <!-- Game Content -->
 <div class="background" id="backGround">
     <img src="../Assest/character/Walk%20(1).png" class="cat" id="cat"/>
     <div class="score " id="score1"></div>
+    <audio id="enterAudio" src="../Assest/audio/Run-Amok(chosic.com).mp3"></audio>
+    <audio id="spaceAudio" src=../Assest/audio/cartoon-jump-6462.mp3></audio>
+    <audio id="gameOverAudio" src="../Assest/audio/negative_beeps-6008.mp3"></audio>
 </div>
 <div id="gameOverScreen" class="game-over-screen">
     <div style="color: black">Game Over</div>
@@ -60,10 +39,10 @@
     <button class="overBtn" onclick="reload();">Try Again</button>
 </div>
 
-<div id="winScreen" class="win-screen">
-    <div style="color: green">You Win!</div>
-    <button class="nextLevelBtn" onclick="nextLevel();">Next Level</button>
-</div>
+<!--<div id="winScreen" class="win-screen">-->
+<!--    <div style="color: green">You Win!</div>-->
+<!--    <button class="nextLevelBtn" onclick="nextLevel();">Next Level</button>-->
+<!--</div>-->
 
 <script src="../js/LevelOne.js"></script>
 </body>

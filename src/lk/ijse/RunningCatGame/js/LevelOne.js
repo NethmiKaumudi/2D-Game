@@ -1,3 +1,9 @@
+var enterAudio = document.getElementById("enterAudio");
+var spaceAudio = document.getElementById("spaceAudio");
+var gameOverAudio = document.getElementById("gameOverAudio");
+
+var gameStarted = false; // Add this variable to track game state
+
 function initGame() {
     // Show the starting page
     document.getElementById("startingPage").style.display = "block";
@@ -21,9 +27,16 @@ function startGame() {
     document.getElementById("backGround").style.display = "block";
 
     // Add any game initialization logic here
+    gameStarted = true;
+
 
 }
 
+document.getElementById("startButton").addEventListener("click", function () {
+    if (!gameStarted) {
+        startGame();
+    }
+});
 
 //Catch character here.......................
 var cat = document.getElementById("cat");
@@ -69,23 +82,30 @@ function runAnimationStart() {
     clearInterval(idleAnimationNumber);
 }
 
-//make enter key Run...........................
+
+// Event listener for the Enter key
 document.addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && gameStarted) {
+        // Start the game and set gameStarted to true
+        // startGame();
+        // gameStarted = true;
         if (runAnimationNumber == 0) {
             runAnimationStart();
             if (moveBackGroundAnimationId == 0) {
                 moveBackGroundAnimationId = setInterval(moveBackground, 100);
-
+                enterAudio.play();
             }
             if (boxAnimationId == 0) {
                 boxAnimationId = setInterval(boxAnimation, 100);
             }
+        } else {
+            // Stop the Enter sound if it's playing
+            enterAudio.pause();
         }
-
     }
-
 });
+
+
 
 //BackGround Move Animation.................................
 
@@ -138,23 +158,22 @@ function jumpAnimationStart() {
 
 }
 
-//using space bar jump the character...................
 document.addEventListener('keydown', function (event) {
-    if (event.key === ' ') {
+    if (event.key === ' ' && gameStarted) {
         if (jumpAnimationNumber == 0) {
             jumpAnimationStart();
+            spaceAudio.play();
+        } else {
+            // Stop the Space sound if it's playing
+            spaceAudio.pause();
         }
         if (moveBackGroundAnimationId == 0) {
             moveBackGroundAnimationId = setInterval(moveBackground, 100);
-
         }
         if (boxAnimationId == 0) {
             boxAnimationId = setInterval(boxAnimation, 100);
         }
-
-
     }
-
 });
 boxMarginLeft = 1800;
 var boxAnimationId = 0;
@@ -213,7 +232,11 @@ function startDeathAnimation() {
 function catDeathAnimation() {
     deathImageNumber = deathImageNumber + 1;
     if (deathImageNumber == 11) {
-        deathImageNumber = 10;        // You can add logic here to handle game over or restart
+        deathImageNumber = 10;
+        gameOverAudio.play();
+        enterAudio.pause();
+        spaceAudio.pause();
+        // You can add logic here to handle game over or restart
         document.getElementById("gameOverScreen").style.visibility = "visible";
         document.getElementById("endScore").innerHTML = score;
     }
@@ -222,6 +245,31 @@ function catDeathAnimation() {
 
 function reload() {
     location.reload();
+    // // Stop any playing audio
+    // enterAudio.pause();
+    // spaceAudio.pause();
+    // gameOverAudio.pause();
+    //
+    // // Reset game state
+    // score = 0;
+    // document.getElementById("score1").innerHTML = score;
+    //
+    // // Clear any intervals (e.g., animations)
+    // clearInterval(boxAnimationId);
+    // clearInterval(runAnimationNumber);
+    // clearInterval(jumpAnimationNumber);
+    // clearInterval(moveBackGroundAnimationId);
+    // clearInterval(deathAnimationNumber);
+    //
+    // // Hide the game-over screen
+    // document.getElementById("gameOverScreen").style.visibility = "hidden";
+    //
+    // // Go back to the starting page
+    // // document.getElementById("startingPage").style.display = "none";
+    // // document.getElementById("backGround").style.display = "block";
+    // startGame();
+    // catMarginTop = initialCatMarginTop;
+    // cat.style.marginTop = catMarginTop + "px";
 
 }
 
