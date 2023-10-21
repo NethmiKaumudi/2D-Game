@@ -4,7 +4,6 @@
     display: flex;
 }
 
-
 /* Existing CSS styles for .background and other elements */
 
 .starting-page {
@@ -26,8 +25,8 @@
     font-size: 56px;
     font-family: Algerian;
     position: relative;
-    top: 60px;
-    left: 280px;
+    top: 5%;
+    left: 20%;
     /*color: white;*/
 }
 
@@ -89,8 +88,6 @@
     height: 500px;
     width: 700px;
     display: flex;
-    /*justify-content: flex-start;*/
-    /*align-items: flex-start;*/
     flex-direction: column;
     background-color: gray;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.1) 50%, rgba(0, 0, 0, 0.1) 50%);
@@ -98,8 +95,8 @@
     background-repeat: no-repeat;
     /*color: white;*/
     position: relative;
-    bottom: -40px;
-    left: 700px;
+    bottom: -5%;
+    left: 48%;
     border: 2px solid gray;
 }
 
@@ -192,11 +189,13 @@
     border: 2px solid black;
     border-radius: 25px;
 }
-.overBtn:hover{
+
+.overBtn:hover {
     background-color: darkred;
     border: 2px solid white;
     cursor: pointer;
 }
+
 /*!* Style for the game-over screen *!*/
 /*.game-over-screen {*/
 /*    display: none;*/
