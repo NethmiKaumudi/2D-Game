@@ -4,6 +4,7 @@ var gameOverAudio = document.getElementById("gameOverAudio");
 var winSound = document.getElementById("winSound");
 
 var gameStarted = false;
+//Catch character here.......................
 var cat = document.getElementById("cat");
 var cat2 = document.getElementById("cat1");
 let score = 0;
@@ -19,10 +20,8 @@ function startGame() {
     document.getElementById("startingPage").style.display = "none";
     document.getElementById("backGround").style.display = "block";
     gameStarted = true;
-    // Add your code here to initialize the game after starting.
-    // For example, you can start animations, play sounds, etc.
-    // runAnimationStart();
-    // moveBackGroundAnimationId = setInterval(moveBackground, 100);
+
+
 }
 
 document.getElementById("startButton").addEventListener("click", function () {
@@ -99,16 +98,18 @@ var moveBackGroundAnimationId = 0
 // var score = 0;
 
 function moveBackground() {
-    if (score >= 250) {
-        // Score is already 150 or more, no further scoring
-        return;
-    }
     backGroundImagePositionX = backGroundImagePositionX - 20;
     document.getElementById("backGround").style.backgroundPositionX = backGroundImagePositionX + "px";
     score = score + 1;
     document.getElementById("score1").innerHTML = score;
-    checkForWin();
+    // Check if the score reaches 150 to trigger the win condition
+    if (score >= 150) {
+        showWinScreen();
+        winSound.play();
 
+
+        // goToNextLevel();
+    }
 }
 
 //Jump Animation.................
@@ -169,18 +170,18 @@ boxMarginLeft = 1800;
 var boxAnimationId = 0;
 
 function createBoxes() {
-    for (var i = 0; i <= 6; i++) {
+    for (var i = 0; i <= 10; i++) {
         var box = document.createElement("div");
         box.className = "box";
         document.getElementById("backGround").appendChild(box);
         box.style.marginLeft = boxMarginLeft + "px";
         //boxMarginLeft=boxMarginLeft+1000;
         box.id = "box" + i;
-        if (i < 3) {
-            boxMarginLeft = boxMarginLeft + 1500;
+        if (i < 5) {
+            boxMarginLeft = boxMarginLeft + 2000;
 
         }
-        if (i >= 3) {
+        if (i >= 5) {
             boxMarginLeft = boxMarginLeft + 1000;
         }
     }
@@ -235,39 +236,109 @@ function catDeathAnimation() {
 
 function reload() {
     location.reload();
-}
 
-function checkForWin() {
-    if (score >= 150) {
-        // Hide the game background
-        document.getElementById("backGround").style.display = "none";
-        showWinScreen();
-        winSound.play();
-        enterAudio.pause();
-        spaceAudio.pause();
-        gameOverAudio.pause();
-    }
 }
 
 function showWinScreen() {
     document.getElementById("gameOverScreen").style.display = "none";
 
     // Show the win screen
-    const winScreen = document.getElementById("win-screen");
-    winScreen.style.display = "block";
+    document.getElementById("win-screen").style.display = "block";
     document.getElementById("final-score").textContent = score;
 
-    // Add an event listener to navigate to the next level when the player clicks the win screen
-    // winScreen.addEventListener("click", function() {
-    //     window.location.href = "leveltwo.html"; // Change the URL to the next level's page
-    // });
 }
 
+//
+// function goToNextLevel() {
+//     // Navigate to another HTML page (e.g., "next_level.html") when the "Next Level" button is clicked
+//     window.location.href = "LevelTwoPage.html";
+// }
+var enterAudio = document.getElementById("enterAudio");
+var spaceAudio = document.getElementById("spaceAudio");
+var gameOverAudio = document.getElementById("gameOverAudio");
+var winSound = document.getElementById("winSound");
+var timerDisplay = document.getElementById("timer");
 
+var gameStarted = false;
+var timer; // Timer variable
+var timerDuration = 60; // Timer duration in seconds (60 seconds)
 
+function updateTimerDisplay() {
+    var minutes = Math.floor(timerDuration / 60);
+    var seconds = timerDuration % 60;
+    var formattedTime = minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0");
+    timerDisplay.textContent = formattedTime;
+}
 
+function startTimer() {
+    if (timerDuration > 0) {
+        timer = setInterval(function () {
+            timerDuration--;
+            updateTimerDisplay();
+        }, 1000); // Update the timer every 1 second
+    } else {
+        gameIsOver(); // Finish the game if the timer is already at 0
+    }
+}
 
+function stopTimer() {
+    clearInterval(timer);
+}
 
+function gameIsOver() {
+    clearInterval(timer);
+    clearInterval(runAnimationNumber);
+    runAnimationNumber = -1;
+    clearInterval(jumpAnimationNumber);
+    jumpAnimationNumber = -1;
+    clearInterval(moveBackGroundAnimationId);
+    moveBackGroundAnimationId = -1;
+    startDeathAnimation(); // Start the death animation
+}
 
+// Event listener for the Enter key
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter' && gameStarted) {
+        if (runAnimationNumber == 0) {
+            runAnimationStart();
+            if (moveBackGroundAnimationId == 0) {
+                moveBackGroundAnimationId = setInterval(moveBackground, 100);
+                enterAudio.play();
+            }
+            if (boxAnimationId == 0) {
+                boxAnimationId = setInterval(boxAnimation, 100);
+            }
 
+            // Start the timer when the game starts
+            startTimer();
+        } else {
+            enterAudio.pause();
+        }
+    }
+});
+
+// ... (the rest of your code)
+
+// In your existing code, you can call gameIsOver() when needed, such as when the player wins.
+
+// Add the following code to show the win screen and stop the timer when the player wins:
+function showWinScreen() {
+    document.getElementById("gameOverScreen").style.display = "none";
+
+    // Stop the timer when the player wins
+    stopTimer();
+
+    // Show the win screen
+    document.getElementById("win-screen").style.display = "block";
+    document.getElementById("final-score").textContent = score;
+}
+
+// Finish the game after 60 seconds using setTimeout
+setTimeout(function () {
+    if (timerDuration > 0) {
+        timerDuration = 0;
+        updateTimerDisplay();
+        gameIsOver();
+    }
+}, 60000); // 60,000 milliseconds (60 seconds)
 
