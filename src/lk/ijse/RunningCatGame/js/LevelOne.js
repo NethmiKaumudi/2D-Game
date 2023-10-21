@@ -257,10 +257,6 @@ function showWinScreen() {
     winScreen.style.display = "block";
     document.getElementById("final-score").textContent = score;
 
-    // Add an event listener to navigate to the next level when the player clicks the win screen
-    // winScreen.addEventListener("click", function() {
-    //     window.location.href = "leveltwo.html"; // Change the URL to the next level's page
-    // });
 }
 
 
